@@ -136,6 +136,13 @@ namespace Minesweeper2
         {
             return this.buttons;
         }
+        public void addFlagForEnd()
+        {
+            foreach(MineButton hasMineButton in this.hasMineButtons) 
+            {
+                hasMineButton.addFlag();
+            }
+        } 
     }
     internal class MineButton : Button
     {
@@ -213,10 +220,7 @@ namespace Minesweeper2
             {
                 if (this.status == 0 && flaggedCount < this.game.getMinedCount())
                 {
-                    this.ButtonImage = getImages(true);
-                    this.ImageAlign = ContentAlignment.MiddleCenter;
-                    this.Text = "";
-                    this.Invalidate();
+                    this.addFlag();
                     this.status = 1;
                     flaggedCount++;
                 }
@@ -228,6 +232,14 @@ namespace Minesweeper2
                     flaggedCount--;
                 }
             }
+        }
+
+        public void addFlag()
+        {
+            this.ButtonImage = getImages(true);
+            this.ImageAlign = ContentAlignment.MiddleCenter;
+            this.Text = "";
+            this.Invalidate();
         }
 
         public void FieldClick(object sender, EventArgs e)

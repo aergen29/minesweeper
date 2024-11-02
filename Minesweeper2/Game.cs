@@ -123,6 +123,7 @@ namespace Minesweeper2
             }
             else
             {
+                this.buttons.addFlagForEnd();
                 this.score = (int)((this.mineCount / (double)this.second) * 1000);
             }
             this.isGameFinished = true;
