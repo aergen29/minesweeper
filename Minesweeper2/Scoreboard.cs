@@ -108,6 +108,7 @@ namespace Minesweeper2
             {
                 Label label = new Label();
                 label.Text = "Henüz oynanmış oyun yok.";
+                label.Width = 200;
                 panel.Controls.Add(label);
             }
             else
