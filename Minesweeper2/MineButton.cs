@@ -255,8 +255,10 @@ namespace Minesweeper2
                 }
                 this.status = 2;
                 this.Text = this.mineCount == 0? "":this.mineCount.ToString();
-                this.Enabled = false;
+                this.ForeColor = this.mineCount <= 1 ? Color.Green : this.mineCount == 2 ? Color.LightBlue : this.mineCount == 3 ? Color.MediumPurple : Color.Red;
+                //this.Enabled = false;
                 this.BackColor = Color.RosyBrown;
+                this.Font = new Font(this.Font, FontStyle.Bold);
                 if ((MineButton)sender == this) game.FieldClicked(true);
                 else game.FieldClicked(false);
                 if (this.mineCount == 0)
@@ -274,7 +276,7 @@ namespace Minesweeper2
         }
         public void openMine()
         {
-            this.Enabled = false;
+            //this.Enabled = false;
             this.ButtonImage = getImages(false);
             this.ImageAlign = ContentAlignment.MiddleCenter;
             this.Text = "";

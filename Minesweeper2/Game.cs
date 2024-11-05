@@ -30,7 +30,7 @@ namespace Minesweeper2
         private Label clickLabel;
         private Scoreboard scoreboard;
 
-        public Game(string username,int size, int mineCount,Panel gridPanel,Label timeLabel, Label clickLabel,Form2 form) 
+        public Game(string username, int size, int mineCount, Panel gridPanel, Label timeLabel, Label clickLabel, Form2 form)
         {
             this.username = username;
             this.size = size;
@@ -41,8 +41,8 @@ namespace Minesweeper2
             this.form = form;
             this.controlWidthHeight();
             this.clickCount = 0;
-            this.buttons = new MineButtons(this.size,this.mineCount,this.buttonWidth,this.buttonHeight,this);
-            this.maxClicked = size*size - mineCount;
+            this.buttons = new MineButtons(this.size, this.mineCount, this.buttonWidth, this.buttonHeight, this);
+            this.maxClicked = size * size - mineCount;
             this.prepareButtons();
             this.renderGame();
             this.openedFieldCount = 0;
@@ -57,7 +57,7 @@ namespace Minesweeper2
             this.grid.clearPanel();
         }
 
-        private void prepareButtons() 
+        private void prepareButtons()
         {
             this.buttons.prepare();
         }
@@ -76,24 +76,25 @@ namespace Minesweeper2
         {
             int hour, minute, second;
             minute = (this.second / 60) % (60 * 60);
-            hour = this.second / (60*60);
+            hour = this.second / (60 * 60);
             second = this.second % 60;
-            string hourString = hour!=0? ( hour<10 ? "0" + hour + ":" : hour + ":" )  :"" ;
-            string minuteString = (minute != 0 || hour != 0) ? (minute < 10 ? "0" + minute + ":" : minute + ":" ) : "";
-            string secondString = second < 10 ? "0" + second : second+"";
+            string hourString = hour != 0 ? (hour < 10 ? "0" + hour + ":" : hour + ":") : "";
+            string minuteString = (minute != 0 || hour != 0) ? (minute < 10 ? "0" + minute + ":" : minute + ":") : "";
+            string secondString = second < 10 ? "0" + second : second + "";
             return hourString + minuteString + secondString;
         }
 
         public void renderGame()
         {
-            this.grid = new Grid(this.buttons , this.gridPanel,this.form);
+            this.grid = new Grid(this.buttons, this.gridPanel, this.form);
             grid.renderButtons();
             updatePanelandFormSizes();
         }
 
         public void FieldClicked(bool count)
         {
-            if(count){
+            if (count)
+            {
                 this.clickCount++;
                 this.clickLabel.Invoke(new Action(() => this.clickLabel.Text = this.clickCount.ToString()));
             }
@@ -107,40 +108,44 @@ namespace Minesweeper2
 
         private void gameFinishedControl()
         {
-            if(this.openedFieldCount == this.maxClicked)
+            if (this.openedFieldCount == this.maxClicked)
             {
                 gameFinished(true);
             }
         }
         private void gameFinished(bool which)
         {
+            string stat = "";
             this.StopTimer();
             if (!which)
             {
                 int flaggedCount = this.buttons.mineButtonsFlagCounter();
                 this.buttons.openMines();
                 this.score = (int)((flaggedCount / (double)this.second) * 1000);
+                stat = "Kaybettiniz!";
             }
             else
             {
                 this.buttons.addFlagForEnd();
                 this.score = (int)((this.mineCount / (double)this.second) * 1000);
+                stat = "Tebrikler!";
             }
             this.isGameFinished = true;
-            this.scoreboard = new Scoreboard(this.username,this.score);
+            this.scoreboard = new Scoreboard(this.username, this.score);
             this.scoreboard.add();
-            MessageBox.Show("Username: "+this.username+"  Score: " + this.score);
+            MessageBox.Show(stat+"\n"+"Kullanıcı adı: " + this.username + "  Skor: " + this.score);
         }
         private void controlWidthHeight()
         {
             int w = 0;
-            if (this.size <= 15) w = 40;
-            else if (this.size <= 20) w = 35;
-            else if (this.size <= 25) w = 30;
-            else w = 25;
+            if (this.size <= 15) w = 45;
+            else if (this.size <= 20) w = 40;
+            else if (this.size <= 25) w = 35;
+            else w = 30;
             int screenWidth = Screen.PrimaryScreen.Bounds.Width;
-            int screenHeight = Screen.PrimaryScreen.Bounds.Height-180;
-            if (w * this.size > screenHeight){
+            int screenHeight = Screen.PrimaryScreen.Bounds.Height - 180;
+            if (w * this.size > screenHeight)
+            {
                 w = screenHeight / this.size;
             }
             this.buttonWidth = w;
@@ -149,7 +154,7 @@ namespace Minesweeper2
 
         private void updatePanelandFormSizes()
         {
-            int width = (this.buttonWidth+1) * this.size;
+            int width = (this.buttonWidth + 1) * this.size;
             form.updateFormMinimumSize(width);
             this.grid.UpdatePanelSize(width);
         }

@@ -2,9 +2,9 @@ namespace Minesweeper2
 {
     public partial class Form1 : Form
     {
-        bool isForm2Opened = false;
-        bool isForm3Opened = false;
-        Form3 form3;
+        private bool isForm2Opened = false;
+        private bool isForm3Opened = false;
+        private Form3 form3;
         public Form1()
         {
             InitializeComponent();
